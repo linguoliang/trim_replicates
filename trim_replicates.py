@@ -48,6 +48,7 @@ def repos(poslist):
 
 
 number = 0
+string=""
 for i in range(0, len(InputFileNameList)):
     rnumber = 0
     with open(InputFileNameList[i], 'r') as infile:
@@ -64,13 +65,16 @@ for i in range(0, len(InputFileNameList)):
             else:
                 FDict[list1[0]] = list1
                 FDict[list1[0]].append(InputFileNameList[i])
-
+    string+=InputFileNameList[i]+"\t"+str(rnumber)+'\n'
 with open("commonsegment.diff-filter.out", 'r') as inputfile:
     with open("diff.text", 'w') as outfile:
         with open("replicates.txt", 'w') as innerd:
-            for element in inputfile:
-                list1 = element.split()
-                string1 = list1[0] + '_' + repos(list1[1:3])
-                if not FDict.has_key(string1):
-                    outfile.write(trim(str(list1)))
-print(number)
+            with open("stastic.txt",'w') as tongji:
+                for element in inputfile:
+                    list1 = element.split()
+                    string1 = list1[0] + '_' + repos(list1[1:3])
+                    if not FDict.has_key(string1):
+                        outfile.write(trim(str(list1)))
+                for value in SDict.values():
+                    innerd.write(trim(str(value)))
+                tongji.write(string)
